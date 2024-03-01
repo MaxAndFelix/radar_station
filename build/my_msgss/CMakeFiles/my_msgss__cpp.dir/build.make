@@ -113,7 +113,7 @@ rosidl_generator_cpp/my_msgss/msg/yolopoint.hpp: rosidl_adapter/my_msgss/msg/Dis
 rosidl_generator_cpp/my_msgss/msg/yolopoint.hpp: rosidl_adapter/my_msgss/msg/Point.idl
 rosidl_generator_cpp/my_msgss/msg/yolopoint.hpp: rosidl_adapter/my_msgss/msg/Points.idl
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mechax/zyb/radar_station/build/my_msgss/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code for ROS interfaces"
-	/usr/bin/python3.10 /opt/ros/humble/share/rosidl_generator_cpp/cmake/../../../lib/rosidl_generator_cpp/rosidl_generator_cpp --generator-arguments-file /home/mechax/zyb/radar_station/build/my_msgss/rosidl_generator_cpp__arguments.json
+	/usr/bin/python3 /opt/ros/humble/share/rosidl_generator_cpp/cmake/../../../lib/rosidl_generator_cpp/rosidl_generator_cpp --generator-arguments-file /home/mechax/zyb/radar_station/build/my_msgss/rosidl_generator_cpp__arguments.json
 
 rosidl_generator_cpp/my_msgss/msg/detail/yolopoint__builder.hpp: rosidl_generator_cpp/my_msgss/msg/yolopoint.hpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/my_msgss/msg/detail/yolopoint__builder.hpp

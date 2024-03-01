@@ -113,6 +113,33 @@ void GetDepth::init_camera_matrix()
     far_distortion_coefficient.at<float>(2,0) = -0.000261;
     far_distortion_coefficient.at<float>(3,0) = 0.018625;
     far_distortion_coefficient.at<float>(4,0) = 0.000000;
+
+    close_camera_matrix.at<float>(0, 0) = 1474.62545;
+    close_camera_matrix.at<float>(0, 1) = 0;
+    close_camera_matrix.at<float>(0, 2) = 367.67245;
+    close_camera_matrix.at<float>(1, 0) = 0;
+    close_camera_matrix.at<float>(1, 1) = 1463.59535;
+    close_camera_matrix.at<float>(1, 2) = 274.85727;
+    close_camera_matrix.at<float>(2, 0) = 0;
+    close_camera_matrix.at<float>(2, 1) = 0;
+    close_camera_matrix.at<float>(2, 2) = 1;
+    close_uni_matrix.at<float>(0, 0) = 0.0242125;
+    close_uni_matrix.at<float>(0, 1) = -0.999689;
+    close_uni_matrix.at<float>(0, 2) = 0.00604586;
+    close_uni_matrix.at<float>(0, 3) = 0.00730231;
+    close_uni_matrix.at<float>(1, 0) = 0.0189659;
+    close_uni_matrix.at<float>(1, 1) = -0.00558721;
+    close_uni_matrix.at<float>(1, 2) = -0.999805;
+    close_uni_matrix.at<float>(1, 3) = 0.0320061;
+    close_uni_matrix.at<float>(2, 0) = 0.999527;
+    close_uni_matrix.at<float>(2, 1) = 0.0243225;
+    close_uni_matrix.at<float>(2, 2) = 0.0188247;
+    close_uni_matrix.at<float>(2, 3) = 0.163526;
+    close_distortion_coefficient.at<float>(0,0) = -0.025299;
+    close_distortion_coefficient.at<float>(1,0) = -0.874546;
+    close_distortion_coefficient.at<float>(2,0) = -0.000261;
+    close_distortion_coefficient.at<float>(3,0) = 0.018625;
+    close_distortion_coefficient.at<float>(4,0) = 0.000000;
 }
 
 void GetDepth::write_csv(std::string filename, std::vector<float> vals) {

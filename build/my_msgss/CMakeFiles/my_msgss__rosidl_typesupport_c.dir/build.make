@@ -82,7 +82,7 @@ rosidl_typesupport_c/my_msgss/msg/yolopoint__type_support.cpp: rosidl_adapter/my
 rosidl_typesupport_c/my_msgss/msg/yolopoint__type_support.cpp: rosidl_adapter/my_msgss/msg/Point.idl
 rosidl_typesupport_c/my_msgss/msg/yolopoint__type_support.cpp: rosidl_adapter/my_msgss/msg/Points.idl
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mechax/zyb/radar_station/build/my_msgss/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C type support dispatch for ROS interfaces"
-	/usr/bin/python3.10 /opt/ros/humble/lib/rosidl_typesupport_c/rosidl_typesupport_c --generator-arguments-file /home/mechax/zyb/radar_station/build/my_msgss/rosidl_typesupport_c__arguments.json --typesupports rosidl_typesupport_fastrtps_c rosidl_typesupport_introspection_c
+	/usr/bin/python3 /opt/ros/humble/lib/rosidl_typesupport_c/rosidl_typesupport_c --generator-arguments-file /home/mechax/zyb/radar_station/build/my_msgss/rosidl_typesupport_c__arguments.json --typesupports rosidl_typesupport_fastrtps_c rosidl_typesupport_introspection_c
 
 rosidl_typesupport_c/my_msgss/msg/yolopoints__type_support.cpp: rosidl_typesupport_c/my_msgss/msg/yolopoint__type_support.cpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_c/my_msgss/msg/yolopoints__type_support.cpp

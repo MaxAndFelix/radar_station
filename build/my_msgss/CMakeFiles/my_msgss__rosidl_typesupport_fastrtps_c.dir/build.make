@@ -84,7 +84,7 @@ rosidl_typesupport_fastrtps_c/my_msgss/msg/detail/yolopoint__rosidl_typesupport_
 rosidl_typesupport_fastrtps_c/my_msgss/msg/detail/yolopoint__rosidl_typesupport_fastrtps_c.h: rosidl_adapter/my_msgss/msg/Point.idl
 rosidl_typesupport_fastrtps_c/my_msgss/msg/detail/yolopoint__rosidl_typesupport_fastrtps_c.h: rosidl_adapter/my_msgss/msg/Points.idl
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mechax/zyb/radar_station/build/my_msgss/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C type support for eProsima Fast-RTPS"
-	/usr/bin/python3.10 /opt/ros/humble/lib/rosidl_typesupport_fastrtps_c/rosidl_typesupport_fastrtps_c --generator-arguments-file /home/mechax/zyb/radar_station/build/my_msgss/rosidl_typesupport_fastrtps_c__arguments.json
+	/usr/bin/python3 /opt/ros/humble/lib/rosidl_typesupport_fastrtps_c/rosidl_typesupport_fastrtps_c --generator-arguments-file /home/mechax/zyb/radar_station/build/my_msgss/rosidl_typesupport_fastrtps_c__arguments.json
 
 rosidl_typesupport_fastrtps_c/my_msgss/msg/detail/yolopoint__type_support_c.cpp: rosidl_typesupport_fastrtps_c/my_msgss/msg/detail/yolopoint__rosidl_typesupport_fastrtps_c.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_fastrtps_c/my_msgss/msg/detail/yolopoint__type_support_c.cpp

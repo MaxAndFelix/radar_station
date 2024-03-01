@@ -84,7 +84,7 @@ rosidl_typesupport_introspection_c/my_msgss/msg/detail/yolopoint__rosidl_typesup
 rosidl_typesupport_introspection_c/my_msgss/msg/detail/yolopoint__rosidl_typesupport_introspection_c.h: rosidl_adapter/my_msgss/msg/Point.idl
 rosidl_typesupport_introspection_c/my_msgss/msg/detail/yolopoint__rosidl_typesupport_introspection_c.h: rosidl_adapter/my_msgss/msg/Points.idl
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mechax/zyb/radar_station/build/my_msgss/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C introspection for ROS interfaces"
-	/usr/bin/python3.10 /opt/ros/humble/lib/rosidl_typesupport_introspection_c/rosidl_typesupport_introspection_c --generator-arguments-file /home/mechax/zyb/radar_station/build/my_msgss/rosidl_typesupport_introspection_c__arguments.json
+	/usr/bin/python3 /opt/ros/humble/lib/rosidl_typesupport_introspection_c/rosidl_typesupport_introspection_c --generator-arguments-file /home/mechax/zyb/radar_station/build/my_msgss/rosidl_typesupport_introspection_c__arguments.json
 
 rosidl_typesupport_introspection_c/my_msgss/msg/detail/yolopoints__rosidl_typesupport_introspection_c.h: rosidl_typesupport_introspection_c/my_msgss/msg/detail/yolopoint__rosidl_typesupport_introspection_c.h
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_typesupport_introspection_c/my_msgss/msg/detail/yolopoints__rosidl_typesupport_introspection_c.h

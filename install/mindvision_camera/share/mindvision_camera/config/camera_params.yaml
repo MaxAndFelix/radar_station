@@ -1,6 +1,1 @@
-/mv_camera:
-  ros__parameters:
-    camera_name: mv_camera
-
-    exposure_time: 50000
-    # analog_gain: 1
+/home/mechax/zyb/radar_station/src/ros2-mindvision-camera/config/camera_params.yaml

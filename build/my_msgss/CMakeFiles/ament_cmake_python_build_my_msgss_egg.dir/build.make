@@ -67,7 +67,7 @@ include CMakeFiles/ament_cmake_python_build_my_msgss_egg.dir/compiler_depend.mak
 include CMakeFiles/ament_cmake_python_build_my_msgss_egg.dir/progress.make
 
 CMakeFiles/ament_cmake_python_build_my_msgss_egg:
-	cd /home/mechax/zyb/radar_station/build/my_msgss/ament_cmake_python/my_msgss && /usr/bin/python3.10 setup.py egg_info
+	cd /home/mechax/zyb/radar_station/build/my_msgss/ament_cmake_python/my_msgss && /usr/bin/python3 setup.py egg_info
 
 ament_cmake_python_build_my_msgss_egg: CMakeFiles/ament_cmake_python_build_my_msgss_egg
 ament_cmake_python_build_my_msgss_egg: CMakeFiles/ament_cmake_python_build_my_msgss_egg.dir/build.make

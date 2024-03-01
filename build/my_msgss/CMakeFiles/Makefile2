@@ -95,7 +95,7 @@ clean: CMakeFiles/my_msgss__cpp.dir/clean
 clean: CMakeFiles/my_msgss__rosidl_typesupport_fastrtps_cpp.dir/clean
 clean: CMakeFiles/my_msgss__rosidl_typesupport_introspection_cpp.dir/clean
 clean: CMakeFiles/my_msgss__rosidl_typesupport_cpp.dir/clean
-clean: CMakeFiles/ament_cmake_python_copy_my_msgss.dir/clean
+clean: CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/clean
 clean: CMakeFiles/ament_cmake_python_build_my_msgss_egg.dir/clean
 clean: CMakeFiles/my_msgss__rosidl_generator_py.dir/clean
 clean: CMakeFiles/my_msgss__rosidl_typesupport_fastrtps_c__pyext.dir/clean
@@ -413,36 +413,36 @@ CMakeFiles/my_msgss__rosidl_typesupport_cpp.dir/clean:
 .PHONY : CMakeFiles/my_msgss__rosidl_typesupport_cpp.dir/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/ament_cmake_python_copy_my_msgss.dir
+# Target rules for target CMakeFiles/ament_cmake_python_symlink_my_msgss.dir
 
 # All Build rule for target.
-CMakeFiles/ament_cmake_python_copy_my_msgss.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ament_cmake_python_copy_my_msgss.dir/build.make CMakeFiles/ament_cmake_python_copy_my_msgss.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ament_cmake_python_copy_my_msgss.dir/build.make CMakeFiles/ament_cmake_python_copy_my_msgss.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mechax/zyb/radar_station/build/my_msgss/CMakeFiles --progress-num= "Built target ament_cmake_python_copy_my_msgss"
-.PHONY : CMakeFiles/ament_cmake_python_copy_my_msgss.dir/all
+CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/build.make CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/build.make CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mechax/zyb/radar_station/build/my_msgss/CMakeFiles --progress-num= "Built target ament_cmake_python_symlink_my_msgss"
+.PHONY : CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/ament_cmake_python_copy_my_msgss.dir/rule: cmake_check_build_system
+CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/mechax/zyb/radar_station/build/my_msgss/CMakeFiles 0
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/ament_cmake_python_copy_my_msgss.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/mechax/zyb/radar_station/build/my_msgss/CMakeFiles 0
-.PHONY : CMakeFiles/ament_cmake_python_copy_my_msgss.dir/rule
+.PHONY : CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/rule
 
 # Convenience name for target.
-ament_cmake_python_copy_my_msgss: CMakeFiles/ament_cmake_python_copy_my_msgss.dir/rule
-.PHONY : ament_cmake_python_copy_my_msgss
+ament_cmake_python_symlink_my_msgss: CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/rule
+.PHONY : ament_cmake_python_symlink_my_msgss
 
 # clean rule for target.
-CMakeFiles/ament_cmake_python_copy_my_msgss.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ament_cmake_python_copy_my_msgss.dir/build.make CMakeFiles/ament_cmake_python_copy_my_msgss.dir/clean
-.PHONY : CMakeFiles/ament_cmake_python_copy_my_msgss.dir/clean
+CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/build.make CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/clean
+.PHONY : CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/ament_cmake_python_build_my_msgss_egg.dir
 
 # All Build rule for target.
-CMakeFiles/ament_cmake_python_build_my_msgss_egg.dir/all: CMakeFiles/ament_cmake_python_copy_my_msgss.dir/all
+CMakeFiles/ament_cmake_python_build_my_msgss_egg.dir/all: CMakeFiles/ament_cmake_python_symlink_my_msgss.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ament_cmake_python_build_my_msgss_egg.dir/build.make CMakeFiles/ament_cmake_python_build_my_msgss_egg.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ament_cmake_python_build_my_msgss_egg.dir/build.make CMakeFiles/ament_cmake_python_build_my_msgss_egg.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mechax/zyb/radar_station/build/my_msgss/CMakeFiles --progress-num= "Built target ament_cmake_python_build_my_msgss_egg"
