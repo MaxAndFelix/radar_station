@@ -27,7 +27,7 @@ Img_Sub::Img_Sub() : Node("img_sub")
             this->far_robot_boxes.data.clear();
         this->far_robot_boxes.id = 0;
         this->far_robot_boxes.text = "none";
-        this->yolo_robot_identify(img_sub_far,far_robot_output,far_robot_boxes,far_inf_robot,far_inf_armor);
+        this->yolo_robot_identify(sub_img_far,far_robot_output,far_robot_boxes,far_inf_robot,far_inf_armor);
         if(far_robot_boxes.data.size() != 0)
         {
             RCLCPP_INFO(get_logger(), "began to send farrobot_boxes");
@@ -37,14 +37,14 @@ Img_Sub::Img_Sub() : Node("img_sub")
         far_qimage_pub_->publish(*(cv_bridge::CvImage(std_msgs::msg::Header(), "bgr8", this->sub_img_far).toImageMsg()));
         is_far_sub = false;
         }
-    }}
+    }};
     close_thread_ = std::thread{[this]() -> void {
         if(is_close_sub == true)
         {
             this->close_robot_boxes.data.clear();
         this->close_robot_boxes.id = 0;
         this->close_robot_boxes.text = "none";
-        this->yolo_robot_identify(img_sub_close,close_robot_output,close_robot_boxes,close_inf_robot,close_inf_armor);
+        this->yolo_robot_identify(sub_img_close,close_robot_output,close_robot_boxes,close_inf_robot,close_inf_armor);
         if(close_robot_boxes.data.size() != 0)
         {
             RCLCPP_INFO(get_logger(), "began to send farrobot_boxes");
@@ -54,7 +54,7 @@ Img_Sub::Img_Sub() : Node("img_sub")
         close_qimage_pub_->publish(*(cv_bridge::CvImage(std_msgs::msg::Header(), "bgr8", this->sub_img_close).toImageMsg()));
         is_close_sub = false;
         }
-    }}
+    }};
    // this->test();
 }
 
@@ -81,7 +81,7 @@ void Img_Sub::img_far_callback(sensor_msgs::msg::Image msg)
             RCLCPP_ERROR(this->get_logger(), "cv_bridge exception: %s", e.what());
             return;
         }
-        this->sub_far_img = cv_ptr->image;
+        this->sub_img_far = cv_ptr->image;
         is_far_sub = true;
         /*if(this->i == 1)
         {
@@ -104,7 +104,7 @@ void Img_Sub::img_close_callback(sensor_msgs::msg::Image msg)
             RCLCPP_ERROR(this->get_logger(), "cv_bridge exception: %s", e.what());
             return;
         }
-        this->sub_close_img = cv_ptr->image;
+        this->sub_img_close = cv_ptr->image;
         is_close_sub = true;
         /*if(this->i == 1)
         {
@@ -120,11 +120,11 @@ void Img_Sub::yolo_init()
     bool runOnGPU = false;
     // 1. 设置你的onnx模型
     // Note that in this example the classes are hard-coded and 'classes.txt' is a place holder.
-    Inference far_inf_armors("/home/mechax/zyb/radar_station/src/Img_Handle/Yolov8_weight/armor/weights/best.onnx",
+    Inference inf_armors("/home/mechax/zyb/radar_station/src/Img_Handle/Yolov8_weight/armor/weights/best.onnx",
                         cv::Size(640, 640),
                         "/home/mechax/zyb/radar_station/src/Img_Handle/Yolov8_weight/armor/class/class.txt",
                         runOnGPU); // classes.txt 可以缺失
-    Inference far_inf_robots("/home/mechax/zyb/radar_station/src/Img_Handle/Yolov8_weight/robot/weights/best.onnx",
+    Inference inf_robots("/home/mechax/zyb/radar_station/src/Img_Handle/Yolov8_weight/robot/weights/best.onnx",
                         cv::Size(640, 640),
                         "/home/mechax/zyb/radar_station/src/Img_Handle/Yolov8_weight/robot/class/class.txt",
                         runOnGPU);
@@ -137,7 +137,7 @@ void Img_Sub::yolo_init()
 
 
 //神经网络识别机器人
-void Img_Sub::yolo_robot_identify(Mat & sub_img,vector<Detection> &robot_output, my_msgss::msg::Yolopoints &robot_boxes,const Inference &inf_robot,const Inference &inf_armor)
+void Img_Sub::yolo_robot_identify(Mat & sub_img,vector<Detection> &robot_output, my_msgss::msg::Yolopoints &robot_boxes,Inference &inf_robot,Inference &inf_armor)
 {
         auto start = std::chrono::steady_clock::now();
         // Inference starts here...
@@ -163,13 +163,13 @@ void Img_Sub::yolo_robot_identify(Mat & sub_img,vector<Detection> &robot_output,
             {
                 box.y = 0;
             }
-            if(box.x + box.width > this->sub_img.cols)
+            if(box.x + box.width > sub_img.cols)
             {
-                box.width = this->sub_img.cols - box.x;
+                box.width = sub_img.cols - box.x;
             }
-            if(box.y + box.height > this->sub_img.rows)
+            if(box.y + box.height > sub_img.rows)
             {
-                box.height = this->sub_img.rows - box.y;
+                box.height = sub_img.rows - box.y;
             }
             my_msgss::msg::Yolopoint robot_box;
             robot_box.x = box.x;
@@ -203,7 +203,7 @@ void Img_Sub::yolo_robot_identify(Mat & sub_img,vector<Detection> &robot_output,
 
 }
 
-void Img_Sub::yolo_armor_identify(Mat & sub_img,my_msgss::msg::Yolopoint &robot_box, cv::Rect &box,const Inference &inf_armor)
+void Img_Sub::yolo_armor_identify(Mat & sub_img,my_msgss::msg::Yolopoint &robot_box, cv::Rect &box, Inference &inf_armor)
 {
     if(box.x < 0)
     {
@@ -251,7 +251,7 @@ void Img_Sub::yolo_armor_identify(Mat & sub_img,my_msgss::msg::Yolopoint &robot_
     }
 }
 
-void Img_Sub::draw_img(Mat & sub_img,my_msgss::msg::Yolopoint &robot_box)
+void Img_Sub::draw_img(Mat & sub_img,my_msgss::msg::Yolopoints &robot_boxes)
 {
     for(int i =0 ;i<robot_boxes.data.size();i++)
     {
@@ -264,7 +264,7 @@ void Img_Sub::draw_img(Mat & sub_img,my_msgss::msg::Yolopoint &robot_box)
         cv::rectangle(sub_img, box, Scalar(255,0,0), 2);
         if(robot_boxes.data[i].id != 0 || robot_boxes.data[i].id != 9)
         {
-            classString = robot_boxes[i].data.class_id + " "  + robot_boxes.data[i].color;
+            classString = robot_boxes.data[i].id + " "  + robot_boxes.data[i].color;
         }
         else if(robot_boxes.data[i].id == 0 || robot_boxes.data[i].id == 9)
         {

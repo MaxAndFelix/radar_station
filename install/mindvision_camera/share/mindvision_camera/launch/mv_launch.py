@@ -1,1 +1,0 @@
-/home/mechax/zyb/radar_station/src/ros2-mindvision-camera/launch/mv_launch.py

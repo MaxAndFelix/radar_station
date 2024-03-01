@@ -16,6 +16,8 @@ class Img_Sub : public::rclcpp::Node
 {
 public:
     Img_Sub();
+
+    ~Img_Sub();
     
     Mat sub_img_far;
     Mat sub_img_close;
@@ -33,21 +35,19 @@ public:
 
     void yolo_init();
 
-    void yolo_robot_identify();
+    void yolo_robot_identify(Mat & sub_img,vector<Detection> &robot_output, my_msgss::msg::Yolopoints &robot_boxes,Inference &inf_robot,Inference &inf_armor);
 
-    void yolo_armor_identify(my_msgss::msg::Yolopoint &robot_box, cv::Rect &box);
+    void yolo_armor_identify(Mat & sub_img,my_msgss::msg::Yolopoint &robot_box, cv::Rect &box,Inference &inf_armor);
 
-    void draw_img();
+    void draw_img(Mat & sub_img,my_msgss::msg::Yolopoints &robot_boxes);
 
     void test();
 
     my_msgss::msg::Yolopoints far_robot_boxes;
     vector<Detection> far_robot_output;
-    my_msgss::msg::Yolopoints far_robot_boxes;
 
     my_msgss::msg::Yolopoints close_robot_boxes;
     vector<Detection> close_robot_output;
-    my_msgss::msg::Yolopoints close_robot_boxes;
 
     Inference far_inf_armor;
     Inference close_inf_armor;

@@ -48,7 +48,8 @@ private:
   rclcpp::Publisher<my_msgss::msg::Distpoints>::SharedPtr far_distancePointPub;
   rclcpp::Publisher<my_msgss::msg::Distpoints>::SharedPtr close_distancePointPub;
   rclcpp::Publisher<my_msgss::msg::Distpoint>::SharedPtr outpost_distancePointPub;
-  rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr depth_qimage_pub;
+  rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr far_depth_qimage_pub;
+  rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr close_depth_qimage_pub;
 
   //声明消息
   my_msgss::msg::Distpoints far_distance_it;

@@ -74,15 +74,18 @@ GetDepth::GetDepth() : Node("GetDepth_node")
     close_uni_matrix = cv::Mat_<float>(3, 4);//相机和雷达的变换矩阵
     close_distortion_coefficient = cv::Mat_<float>(5, 1);   
     this->init_camera_matrix();
-    
-    far_distancePointPub = this->create_publisher<my_msgss::msg::Distpoints>("/sensor_far/distance_point", 10);
-    close_distancePointPub = this->create_publisher<my_msgss::msg::Distpoints>("/sensor_close/distance_point", 10);
-    outpost_distancePointPub = this->create_publisher<my_msgss::msg::Distpoint>("sensor_far/outpost", 10);
-    depth_qimage_pub = this->create_publisher<sensor_msgs::msg::Image>("/qt/depth_qimage", 1);
 
     cloud_sub = this->create_subscription<sensor_msgs::msg::PointCloud2>("/livox/lidar", 10, std::bind(&GetDepth::pointCloudCallback, this, std::placeholders::_1));
+
     far_yolo_sub = this->create_subscription<my_msgss::msg::Yolopoints>("/far_rectangles", 1, std::bind(&GetDepth::far_yoloCallback, this, std::placeholders::_1));
+    far_distancePointPub = this->create_publisher<my_msgss::msg::Distpoints>("/sensor_far/distance_point", 10);
+    far_depth_qimage_pub = this->create_publisher<sensor_msgs::msg::Image>("/qt/far/depth_qimage", 1);
+    
     close_yolo_sub = this->create_subscription<my_msgss::msg::Yolopoints>("/close_rectangles", 1, std::bind(&GetDepth::close_yoloCallback, this, std::placeholders::_1));
+    close_distancePointPub = this->create_publisher<my_msgss::msg::Distpoints>("/sensor_close/distance_point", 10);
+    close_depth_qimage_pub = this->create_publisher<sensor_msgs::msg::Image>("/qt/close/depth_qimage", 1);
+
+    outpost_distancePointPub = this->create_publisher<my_msgss::msg::Distpoint>("sensor_far/outpost", 10);
     outpost_Sub = this->create_subscription<my_msgss::msg::Points>("/sensor_far/calibration", 1, std::bind(&GetDepth::outpost_Callback, this, std::placeholders::_1));
 }
 void GetDepth::init_camera_matrix()
@@ -268,7 +271,7 @@ void GetDepth::far_yoloCallback(const my_msgss::msg::Yolopoints &input) {
     far_distancePointPub->publish(far_distance_it);
     resize(far_depth_show, far_depth_show, Size(640, 480));
     //std::cout << "发送深度图像Qimage" << endl;
-    depth_qimage_pub->publish(*(cv_bridge::CvImage(std_msgs::msg::Header(), "32FC1", far_depth_show).toImageMsg()));
+    far_depth_qimage_pub->publish(*(cv_bridge::CvImage(std_msgs::msg::Header(), "32FC1", far_depth_show).toImageMsg()));
     /*imshow("far_depth_show", far_depth_show);
     waitKey(1);*/
 };
@@ -336,9 +339,9 @@ void GetDepth::close_yoloCallback(const my_msgss::msg::Yolopoints &input) {
         }
     }
     close_distancePointPub->publish(close_distance_it);
-    resize(close_depth_show, close_depth_show, Size(960, 768));
-    imshow("close_depth_show", close_depth_show);
-    waitKey(0);
+    resize(close_depth_show, close_depth_show, Size(640, 480));
+    close_depth_qimage_pub->publish(*(cv_bridge::CvImage(std_msgs::msg::Header(), "32FC1", close_depth_show).toImageMsg()));
+    //waitKey(0);
 };
 /**
  * 将受到的点云消息转换成点云
