@@ -32,7 +32,8 @@ public:
 
 public:
     QPointF pos;
-    QVector<mapPos> mapPoints;
+    QVector<mapPos> farmapPoints;
+    QVector<mapPos> closemapPoints;
     QPixmap image;
     int mapx;
     int mapy;

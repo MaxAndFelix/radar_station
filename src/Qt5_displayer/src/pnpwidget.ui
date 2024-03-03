@@ -13,11 +13,11 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="cameraImage">
+  <widget class="QLabel" name="farImg">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>80</y>
+     <x>90</x>
+     <y>150</y>
      <width>640</width>
      <height>480</height>
     </rect>
@@ -35,7 +35,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../../../Pictures/Screenshots/1.png</pixmap>
+    <pixmap resource="radarImage.qrc">:/map/C:/Users/zyb/Desktop/Robotmaster/pitures/map.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -47,8 +47,8 @@
   <widget class="QPushButton" name="beginPoint">
    <property name="geometry">
     <rect>
-     <x>830</x>
-     <y>80</y>
+     <x>740</x>
+     <y>150</y>
      <width>121</width>
      <height>31</height>
     </rect>
@@ -60,8 +60,8 @@
   <widget class="QPushButton" name="restartPoint">
    <property name="geometry">
     <rect>
-     <x>830</x>
-     <y>180</y>
+     <x>740</x>
+     <y>260</y>
      <width>121</width>
      <height>31</height>
     </rect>
@@ -73,10 +73,10 @@
   <widget class="QPushButton" name="beginPnp">
    <property name="geometry">
     <rect>
-     <x>830</x>
-     <y>280</y>
+     <x>740</x>
+     <y>360</y>
      <width>121</width>
-     <height>41</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -86,9 +86,9 @@
   <widget class="QPlainTextEdit" name="message">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>590</y>
-     <width>1401</width>
+     <x>90</x>
+     <y>660</y>
+     <width>1421</width>
      <height>391</height>
     </rect>
    </property>
@@ -96,12 +96,34 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QLabel" name="closeImg">
+   <property name="geometry">
+    <rect>
+     <x>870</x>
+     <y>150</y>
+     <width>640</width>
+     <height>480</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="radarImage.qrc">:/map/C:/Users/zyb/Desktop/Robotmaster/pitures/map.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
   <zorder>beginPoint</zorder>
   <zorder>restartPoint</zorder>
   <zorder>beginPnp</zorder>
-  <zorder>cameraImage</zorder>
+  <zorder>farImg</zorder>
   <zorder>message</zorder>
+  <zorder>closeImg</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="radarImage.qrc"/>
+ </resources>
  <connections/>
 </ui>

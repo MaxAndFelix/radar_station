@@ -23,25 +23,36 @@ public:
     ~qtNode();
 
     void farImageCallback(const sensor_msgs::msg::Image msg);
-    void depthImageCallback(const sensor_msgs::msg::Image msg);
-    void pointsCallback(const my_msgss::msg::Points msg);
+    void farDepthImageCallback(const sensor_msgs::msg::Image msg);
+    void farPointsCallback(const my_msgss::msg::Points msg);
+
+    void closeImageCallback(const sensor_msgs::msg::Image msg);
+    void closeDepthImageCallback(const sensor_msgs::msg::Image msg);
+    void closePointsCallback(const my_msgss::msg::Points msg);
 
     void run() override;
 
 Q_SIGNALS:
     void updateFarImage();
-    void updateDepthImage();
+    void updateCloseImage();
+    void updateFarDepthImage();
+    void updateCloseDepthImage();
     void updatePoints();
 
 public:
     QImage far_qimage;
-    QImage depth_qimage;
-    my_msgss::msg::Points world_qpoints;
+    QImage fardepth_qimage;
+    QImage close_qimage;
+    QImage closedepth_qimage;
+    my_msgss::msg::Points far_world_qpoints;
+    my_msgss::msg::Points close_world_qpoints;
 
     rclcpp::Publisher<std_msgs::msg::Float32MultiArray>::SharedPtr pnp_pub_;
 
     rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr far_sub_;
-    rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr depth_sub_;
+    rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr close_sub_;
+    rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr fardepth_sub_;
+    rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr closedepth_sub_;
     rclcpp::Subscription<my_msgss::msg::Points>::SharedPtr points_sub_;
     rclcpp::Node::SharedPtr qnode;
 

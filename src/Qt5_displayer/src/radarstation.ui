@@ -68,16 +68,16 @@
      <number>0</number>
     </property>
     <widget class="QWidget" name="mapWidget">
-     <widget class="QLabel" name="imgHandle">
+     <widget class="QLabel" name="closeImg">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
         <x>1150</x>
-        <y>170</y>
+        <y>80</y>
         <width>391</width>
-        <height>311</height>
+        <height>321</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -87,7 +87,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>../../../Pictures/Screenshots/1.png</pixmap>
+       <pixmap>C:/Users/zyb/Pictures/Saved Pictures/mylearnlow1.jpg</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -99,7 +99,7 @@
         <x>0</x>
         <y>80</y>
         <width>1041</width>
-        <height>531</height>
+        <height>611</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -109,7 +109,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>../../../Pictures/Screenshots/1.png</pixmap>
+       <pixmap>:/map/C:/Users/zyb/Desktop/Robotmaster/pitures/map.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -122,8 +122,8 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>610</y>
-        <width>781</width>
+        <y>750</y>
+        <width>1041</width>
         <height>401</height>
        </rect>
       </property>
@@ -137,13 +137,13 @@
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="radarDepth">
+     <widget class="QLabel" name="closeDepth">
       <property name="geometry">
        <rect>
-        <x>1140</x>
-        <y>630</y>
+        <x>1150</x>
+        <y>400</y>
         <width>391</width>
-        <height>311</height>
+        <height>321</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -153,16 +153,59 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>../../../Pictures/Screenshots/1.png</pixmap>
+       <pixmap>:/map/C:/Users/zyb/Desktop/Robotmaster/pitures/map.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
       </property>
      </widget>
-     <zorder>radarDepth</zorder>
+     <widget class="QLabel" name="farImg">
+      <property name="geometry">
+       <rect>
+        <x>1150</x>
+        <y>720</y>
+        <width>391</width>
+        <height>291</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>:/map/C:/Users/zyb/Desktop/Robotmaster/pitures/map.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="farDepth">
+      <property name="geometry">
+       <rect>
+        <x>1150</x>
+        <y>1020</y>
+        <width>391</width>
+        <height>291</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <zorder>closeDepth</zorder>
      <zorder>mapMessage</zorder>
      <zorder>map</zorder>
-     <zorder>imgHandle</zorder>
+     <zorder>closeImg</zorder>
+     <zorder>farImg</zorder>
+     <zorder>farDepth</zorder>
     </widget>
     <widget class="pnpWidget" name="solvePnpWidget"/>
    </widget>
@@ -184,6 +227,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="radarImage.qrc"/>
+ </resources>
  <connections/>
 </ui>

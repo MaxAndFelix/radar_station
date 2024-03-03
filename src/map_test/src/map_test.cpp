@@ -7,12 +7,19 @@ MapTest::MapTest() : Node("map_test")
     get_map();
     
     far_calibration();
+    close_calibration();
+
     far_distpoints_sub_ = this->create_subscription<my_msgss::msg::Distpoints>("/sensor_far/distance_point",10,
                      std::bind(&MapTest::far_callback,this,std::placeholders::_1));
+
+    close_distpoints_sub_ = this->create_subscription<my_msgss::msg::Distpoints>("/sensor_close/distance_point",10,
+                     std::bind(&MapTest::close_callback,this,std::placeholders::_1));
+                     
     pnp_sub_ = this->create_subscription<std_msgs::msg::Float32MultiArray>("/qt/pnp",10,
                      std::bind(&MapTest::pnp_callback,this,std::placeholders::_1));
 
-    points_pub_ = this->create_publisher<my_msgss::msg::Points>("/qt/points", 10);
+    farpoints_pub_ = this->create_publisher<my_msgss::msg::Points>("/qt/farpoints", 10);
+    closepoints_pub_ = this->create_publisher<my_msgss::msg::Points>("/qt/closepoints", 10);
 }
 
 void MapTest::parameter_init()
@@ -35,6 +42,21 @@ void MapTest::parameter_init()
     far_distCoeffs_.at<double>(0, 2) = -0.000261;
     far_distCoeffs_.at<double>(0, 3) = 0.018625;
     far_distCoeffs_.at<double>(0, 4) = 0.0;
+
+    close_CamMatrix_.at<double>(0, 0) = 1474.62545;
+    close_CamMatrix_.at<double>(0, 1) = 0.0;
+    close_CamMatrix_.at<double>(0, 2) = 367.67245;
+    close_CamMatrix_.at<double>(1, 0) = 0.0;
+    close_CamMatrix_.at<double>(1, 1) = 1463.59535;
+    close_CamMatrix_.at<double>(1, 2) = 274.85727;
+    close_CamMatrix_.at<double>(2, 0) = 0.0;
+    close_CamMatrix_.at<double>(2, 1) = 0.0;
+    close_CamMatrix_.at<double>(2, 2) = 1.0;
+    close_distCoeffs_.at<double>(0, 0) = -0.025299;
+    close_distCoeffs_.at<double>(0, 1) = -0.874546;
+    close_distCoeffs_.at<double>(0, 2) = -0.000261;
+    close_distCoeffs_.at<double>(0, 3) = 0.018625;
+    close_distCoeffs_.at<double>(0, 4) = 0.0;
 }
 
 void MapTest::get_map()
@@ -50,52 +72,60 @@ void MapTest::get_map()
 
 void MapTest::far_calibration()
 {
+
+    vector<cv::Point3d> objectPoints;
+    vector<cv::Point2d> imagePoints;
+
     Point3d objectpoint_one;
     objectpoint_one.x = 2350.0;
     objectpoint_one.y = 7000.0;
     objectpoint_one.z = 0.0;
-    far_objectPoints.push_back(objectpoint_one);
+    objectPoints.push_back(objectpoint_one);
     Point3d objectpoint_two;
     objectpoint_two.x = 2350.0;
     objectpoint_two.y = 7000.0;
     objectpoint_two.z = 500.0;
-    far_objectPoints.push_back(objectpoint_two);
+    objectPoints.push_back(objectpoint_two);
     Point3d objectpoint_three;
     objectpoint_three.x = 4750.0;
     objectpoint_three.y = 6800.0;
     objectpoint_three.z = 500.0;
-    far_objectPoints.push_back(objectpoint_three);
+    objectPoints.push_back(objectpoint_three);
     Point3d objectpoint_four;
     objectpoint_four.x = 4750.0;
     objectpoint_four.y = 6800.0;
     objectpoint_four.z = 0.0;
-    far_objectPoints.push_back(objectpoint_four);
+    objectPoints.push_back(objectpoint_four);
     Point2d imagepoint_one;
     imagepoint_one.x = 67.0;
     imagepoint_one.y = 176.0;
-    far_imagePoints.push_back(imagepoint_one);
+    magePoints.push_back(imagepoint_one);
     Point2d imagepoint_two;
     imagepoint_two.x = 67.0;
     imagepoint_two.y = 95.0;
-    far_imagePoints.push_back(imagepoint_two);
+    imagePoints.push_back(imagepoint_two);
     Point2d imagepoint_three;
     imagepoint_three.x = 519.0;
     imagepoint_three.y = 107.0;
-    far_imagePoints.push_back(imagepoint_three);
+    imagePoints.push_back(imagepoint_three);
     Point2d imagepoint_four;
     imagepoint_four.x = 519.0;
     imagepoint_four.y = 189.0;
-    far_imagePoints.push_back(imagepoint_four);
+    imagePoints.push_back(imagepoint_four);
     cout << "far_imagePoints.size():" << far_imagePoints.size() << endl;
     cout << "far_objectPoints.size():" << far_objectPoints.size() << endl;
     cout << "开始相机标定" << endl;
 
-    solvePnP(far_objectPoints, far_imagePoints, far_CamMatrix_, far_distCoeffs_, far_Rjacob, far_T);
+    solvePnP(objectPoints, imagePoints, far_CamMatrix_, far_distCoeffs_, far_Rjacob, far_T);
+    solvePnP(objectPoints, imagePoints, clsoe_CamMatrix_, clsoe_distCoeffs_, close_Rjacob, close_T);
 
     Rodrigues(far_Rjacob, far_R);
+    Rodrigues(close_Rjacob, close_R);
     cout << "旋转矩阵:" << far_R << endl;
     cout << "平移矩阵" << far_T << endl;
 }
+
+
 
 void MapTest::pnp_callback(const std_msgs::msg::Float32MultiArray msg)
 {
@@ -124,7 +154,7 @@ Point2f MapTest::calculate_pixel_codi(const map_point &point) {
     return res;
 }
 
-void MapTest::draw_point_on_map()
+void MapTest::draw_point_on_map(Mat &map,vector<map_point> &map_points)
 {
     RCLCPP_INFO(this->get_logger(), "begin to draw_point_on_map");
     string id;
@@ -142,7 +172,7 @@ void MapTest::draw_point_on_map()
             {
                 circle(map, p, 10, Scalar(255,0,0), -1, LINE_8, 0);
             }
-            putText(map, "3", Point(p.x - 7, p.y - 7) , cv::FONT_HERSHEY_SIMPLEX, 0.7,
+            putText(map, id, Point(p.x - 7, p.y - 7) , cv::FONT_HERSHEY_SIMPLEX, 0.7,
                 cv::Scalar(0xFF, 0xFF, 0xFF), 2);
         }
     }
@@ -189,9 +219,52 @@ void MapTest::far_callback(const my_msgss::msg::Distpoints msg)
         world_point.z = map_points[i].z;
         world_points.data.push_back(world_point);
     }
-    points_pub_->publish(world_points);
-    draw_point_on_map(); 
-    map_points.clear();
+    far_points_pub_->publish(world_points);
+    /*imshow("map", map);
+    waitKey(1);*/
+}
+
+void MapTest::close_callback(const my_msgss::msg::Distpoints msg)
+{
+    Mat invR;
+    Mat invM;
+    //求内参逆矩阵
+    invert(close_CamMatrix_, invM);
+    //求旋转矩阵逆矩阵
+    invert(close_R, invR);
+    test_map.copyTo(map);
+    for(int i =0 ;i<msg.data.size();i++)
+    {
+        if(msg.data[i].dist > 0) {
+            RCLCPP_INFO(this->get_logger(), "begin to calculate");
+            Mat x8_pixel;
+            x8_pixel = (Mat_<double>(3, 1) << (double) msg.data[i].x, (double) msg.data[i].y, 1);
+            //以mm为单位，从m->mm 
+            //这个相当于公式中的（u，v，1）* d
+            x8_pixel *= (1000 * msg.data[i].dist);
+            //公式 得到三维世界坐标
+            Mat calcWorld = invR * (invM * x8_pixel - far_T);//2D-3D变换
+            //换算成m
+            calcWorld /= 1000;
+            map_point a_map_point;
+            a_map_point.id = msg.data[i].id;
+            a_map_point.x = calcWorld.at<double>(0, 0);
+            a_map_point.y = calcWorld.at<double>(1, 0);
+            a_map_point.z = calcWorld.at<double>(2, 0);
+            map_points.push_back(a_map_point);
+        }
+    }
+    my_msgss::msg::Points world_points;
+    for(int i = 0 ;i<map_points.size();i++)
+    {
+        my_msgss::msg::Point world_point;
+        world_point.id = map_points[i].id;
+        world_point.x = map_points[i].x;
+        world_point.y = map_points[i].y;
+        world_point.z = map_points[i].z;
+        world_points.data.push_back(world_point);
+    }
+    close_points_pub_->publish(world_points);
     /*imshow("map", map);
     waitKey(1);*/
 }

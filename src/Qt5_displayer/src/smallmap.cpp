@@ -40,41 +40,76 @@ void smallMap::paintEvent(QPaintEvent *event)
     rectPixmap = QRect(drawPos.x(),drawPos.y(),width,height);
     painter.drawPixmap(rectPixmap,scalePixmap);
     //std::cout << "绘画地图" << std::endl;
-    if(mapPoints.size() != 0)
+    if(farmapPoints.size() != 0)
     {
-        for(int i = 0;i < mapPoints.size();i++)
+        for(int i = 0;i < farmapPoints.size();i++)
         {
-            if(mapPoints[i].id <= 5)
+            if(farmapPoints[i].id <= 5)
             {
-                mapPoints[i].id = mapPoints[i].id + 1;
+                farmapPoints[i].id = farmapPoints[i].id + 1;
                 painter.setPen(QPen(Qt::red,5));
                 painter.setBrush(Qt::red);
             }
-            else if(mapPoints[i].id > 5 && mapPoints[i].id < 12)
+            else if(farmapPoints[i].id > 5 && farmapPoints[i].id < 12)
             {
-                mapPoints[i].id = mapPoints[i].id - 5;
+                farmapPoints[i].id = farmapPoints[i].id - 5;
                 painter.setPen(QPen(Qt::blue,5));
                 painter.setBrush(Qt::blue);
             }
-            else if(mapPoints[i].id == 12)
+            else if(farmapPoints[i].id == 12)
             {
-                mapPoints[i].id = 0;
+                farmapPoints[i].id = 0;
                 painter.setPen(QPen(Qt::red,5));
                 painter.setBrush(Qt::red);
             }
-            else if(mapPoints[i].id == 13)
+            else if(farmapPoints[i].id == 13)
             {
-                mapPoints[i].id = 0;
+                farmapPoints[i].id = 0;
                 painter.setPen(QPen(Qt::blue,5));
                 painter.setBrush(Qt::blue);
             }
-            painter.drawEllipse(mapPoints[i].x,mapPoints[i].y,20 * this->scaleValue,20 * this->scaleValue);
+            painter.drawEllipse(farmapPoints[i].x,farmapPoints[i].y,20 * this->scaleValue,20 * this->scaleValue);
             //std::cout << "绘画坐标点" << std::endl;
             painter.setPen(QPen(Qt::black,5));
-            painter.drawText(mapPoints[i].x + (20 * this->scaleValue) / 2,mapPoints[i].y + (20 * this->scaleValue) / 2,QString::number(mapPoints[i].id));
+            painter.drawText(farmapPoints[i].x + (20 * this->scaleValue) / 2,farmapPoints[i].y + (20 * this->scaleValue) / 2,QString::number(farmapPoints[i].id));
         }
+        farmapPoints.clear();
     }
-    mapPoints.clear();
+    if(closemapPoints.size() != 0)
+    {
+        for(int i = 0;i < closemapPoints.size();i++)
+        {
+            if(closemapPoints[i].id <= 5)
+            {
+                closemapPoints[i].id = closemapPoints[i].id + 1;
+                painter.setPen(QPen(Qt::red,5));
+                painter.setBrush(Qt::red);
+            }
+            else if(closemapPoints[i].id > 5 && closemapPoints[i].id < 12)
+            {
+                closemapPoints[i].id = closemapPoints[i].id - 5;
+                painter.setPen(QPen(Qt::blue,5));
+                painter.setBrush(Qt::blue);
+            }
+            else if(closemapPoints[i].id == 12)
+            {
+                closemapPoints[i].id = 0;
+                painter.setPen(QPen(Qt::red,5));
+                painter.setBrush(Qt::red);
+            }
+            else if(closemapPoints[i].id == 13)
+            {
+                closemapPoints[i].id = 0;
+                painter.setPen(QPen(Qt::blue,5));
+                painter.setBrush(Qt::blue);
+            }
+            painter.drawEllipse(closemapPoints[i].x,closemapPoints[i].y,20 * this->scaleValue,20 * this->scaleValue);
+            //std::cout << "绘画坐标点" << std::endl;
+            painter.setPen(QPen(Qt::black,5));
+            painter.drawText(closemapPoints[i].x + (20 * this->scaleValue) / 2,closemapPoints[i].y + (20 * this->scaleValue) / 2,QString::number(closemapPoints[i].id));
+        }
+        closemapPoints.clear();
+    }
     event->accept();
 }
 

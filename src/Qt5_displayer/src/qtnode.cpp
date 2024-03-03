@@ -32,25 +32,20 @@ void qtNode::farImageCallback(const sensor_msgs::msg::Image msg)
     }
 }
 
-void qtNode::depthImageCallback(const sensor_msgs::msg::Image msg)
+void qtNode::closeImageCallback(const sensor_msgs::msg::Image msg)
 {
     cv_bridge::CvImagePtr cv_ptr;
     try
     {
-        cv_ptr = cv_bridge::toCvCopy(msg,sensor_msgs::image_encodings::TYPE_32FC1);
+        cv_ptr = cv_bridge::toCvCopy(msg,sensor_msgs::image_encodings::BGR8);
         if(!cv_ptr->image.empty())
         {
-            Mat depth_image = cv_ptr->image;
-            cv::resize(depth_image,depth_image,cv::Size(DEPTH_IMAGE_WIDTH,DEPTH_IMAGE_HEIGHT));
-            Mat depth_image_8u;
-            depth_image.convertTo(depth_image_8u,CV_8UC1,255.0/10.0);
-            Mat depth_bgrimage;
-            applyColorMap(depth_image_8u, depth_bgrimage, cv::COLORMAP_JET);
-            depth_qimage = QImage((const unsigned char*)(depth_bgrimage.data),depth_bgrimage.cols,depth_bgrimage.rows,QImage::Format_BGR888);
-            //depth_qimage = QImage((const unsigned char*)(depth_image.data),depth_image.cols,depth_image.rows,QImage::Format_Grayscale8);
+            Mat close_image = cv_ptr->image;
+            cv::resize(close_image,close_image,cv::Size(FAR_IMAGE_WIDTH,FAR_IMAGE_HEIGHT));
+            close_qimage = QImage((const unsigned char*)(close_image.data),close_image.cols,close_image.rows,QImage::Format_RGB888);
         }
-        //cout << "激活depth函数" << endl;
-        Q_EMIT updateDepthImage();
+        //cout << "激活far函数" << endl;
+        Q_EMIT updateCloseImage();
     }
     catch(cv_bridge::Exception &e)
     {
@@ -59,10 +54,70 @@ void qtNode::depthImageCallback(const sensor_msgs::msg::Image msg)
     }
 }
 
-void qtNode::pointsCallback(const my_msgss::msg::Points msg)
+void qtNode::farDepthImageCallback(const sensor_msgs::msg::Image msg)
 {
-    world_qpoints = msg;
-    Q_EMIT updatePoints();
+    cv_bridge::CvImagePtr cv_ptr;
+    try
+    {
+        cv_ptr = cv_bridge::toCvCopy(msg,sensor_msgs::image_encodings::TYPE_32FC1);
+        if(!cv_ptr->image.empty())
+        {
+            Mat fardepth_image = cv_ptr->image;
+            cv::resize(fardepth_image,fardepth_image,cv::Size(DEPTH_IMAGE_WIDTH,DEPTH_IMAGE_HEIGHT));
+            Mat fardepth_image_8u;
+            fardepth_image.convertTo(fardepth_image_8u,CV_8UC1,255.0/10.0);
+            Mat fardepth_bgrimage;
+            applyColorMap(fardepth_image_8u, fardepth_bgrimage, cv::COLORMAP_JET);
+            fardepth_qimage = QImage((const unsigned char*)(fardepth_bgrimage.data),fardepth_bgrimage.cols,fardepth_bgrimage.rows,QImage::Format_BGR888);
+            //depth_qimage = QImage((const unsigned char*)(depth_image.data),depth_image.cols,depth_image.rows,QImage::Format_Grayscale8);
+        }
+        //cout << "激活depth函数" << endl;
+        Q_EMIT updateFarDepthImage();
+    }
+    catch(cv_bridge::Exception &e)
+    {
+        RCLCPP_ERROR(qnode->get_logger(),"cv_bridge exception: %s",e.what());
+        return;
+    }
+}
+
+void qtNode::closeDepthImageCallback(const sensor_msgs::msg::Image msg)
+{
+    cv_bridge::CvImagePtr cv_ptr;
+    try
+    {
+        cv_ptr = cv_bridge::toCvCopy(msg,sensor_msgs::image_encodings::TYPE_32FC1);
+        if(!cv_ptr->image.empty())
+        {
+            Mat closedepth_image = cv_ptr->image;
+            cv::resize(closedepth_image,closedepth_image,cv::Size(DEPTH_IMAGE_WIDTH,DEPTH_IMAGE_HEIGHT));
+            Mat closedepth_image_8u;
+            closedepth_image.convertTo(closedepth_image_8u,CV_8UC1,255.0/10.0);
+            Mat closedepth_bgrimage;
+            applyColorMap(closedepth_image_8u, closedepth_bgrimage, cv::COLORMAP_JET);
+            closedepth_qimage = QImage((const unsigned char*)(closedepth_bgrimage.data),closedepth_bgrimage.cols,closedepth_bgrimage.rows,QImage::Format_BGR888);
+            //depth_qimage = QImage((const unsigned char*)(depth_image.data),depth_image.cols,depth_image.rows,QImage::Format_Grayscale8);
+        }
+        //cout << "激活depth函数" << endl;
+        Q_EMIT updateCloseDepthImage();
+    }
+    catch(cv_bridge::Exception &e)
+    {
+        RCLCPP_ERROR(qnode->get_logger(),"cv_bridge exception: %s",e.what());
+        return;
+    }
+}
+
+void qtNode::farPointsCallback(const my_msgss::msg::Points msg)
+{
+    far_world_qpoints = msg;
+    Q_EMIT updateFarPoints();
+}
+
+void qtNode::closePointsCallback(const my_msgss::msg::Points msg)
+{
+    close_world_qpoints = msg;
+    Q_EMIT updateClosePoints();
 }
 
 void qtNode::run()
@@ -82,9 +137,15 @@ void qtNode::run()
     std::cout << "Failed to create node: " << e.what() << std::endl;
 }*/
     pnp_pub_ = qnode->create_publisher<std_msgs::msg::Float32MultiArray>("/qt/pnp", 10);
+
     far_sub_ = qnode->create_subscription<sensor_msgs::msg::Image>("/qt/far_qimage", 1, std::bind(&qtNode::farImageCallback, this, std::placeholders::_1));
-    depth_sub_ = qnode->create_subscription<sensor_msgs::msg::Image>("/qt/depth_qimage", 1, std::bind(&qtNode::depthImageCallback, this, std::placeholders::_1));
-    points_sub_ = qnode->create_subscription<my_msgss::msg::Points>("/qt/points", 10, std::bind(&qtNode::pointsCallback, this, std::placeholders::_1));
+    fardepth_sub_ = qnode->create_subscription<sensor_msgs::msg::Image>("/qt/fardepth_qimage", 1, std::bind(&qtNode::depthImageCallback, this, std::placeholders::_1));
+    farpoints_sub_ = qnode->create_subscription<my_msgss::msg::Points>("/qt/farpoints", 10, std::bind(&qtNode::pointsCallback, this, std::placeholders::_1));
+
+    close_sub_ = qnode->create_subscription<sensor_msgs::msg::Image>("/qt/close_qimage", 1, std::bind(&qtNode::farImageCallback, this, std::placeholders::_1));
+    closedepth_sub_ = qnode->create_subscription<sensor_msgs::msg::Image>("/qt/closedepth_qimage", 1, std::bind(&qtNode::depthImageCallback, this, std::placeholders::_1));
+    closepoints_sub_ = qnode->create_subscription<my_msgss::msg::Points>("/qt/closepoints", 10, std::bind(&qtNode::pointsCallback, this, std::placeholders::_1));
+
     rclcpp::spin(qnode);
     cout << "node异常关闭" << endl;
     rclcpp::shutdown();

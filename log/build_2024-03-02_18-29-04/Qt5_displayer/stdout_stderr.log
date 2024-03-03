@@ -1,0 +1,102 @@
+[ 12%] [34m[1mAutomatic MOC and UIC for target Qt5_displayer[0m
+[ 12%] Built target Qt5_displayer_autogen
+[ 25%] [32mBuilding CXX object CMakeFiles/Qt5_displayer.dir/Qt5_displayer_autogen/mocs_compilation.cpp.o[0m
+[ 37%] [32mBuilding CXX object CMakeFiles/Qt5_displayer.dir/src/smallmap.cpp.o[0m
+[ 62%] [32mBuilding CXX object CMakeFiles/Qt5_displayer.dir/src/main.cpp.o[0m
+[ 62%] [32mBuilding CXX object CMakeFiles/Qt5_displayer.dir/src/pnpwidget.cpp.o[0m
+[ 75%] [32mBuilding CXX object CMakeFiles/Qt5_displayer.dir/src/qtnode.cpp.o[0m
+[ 87%] [32mBuilding CXX object CMakeFiles/Qt5_displayer.dir/src/radarstation.cpp.o[0m
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/smallmap.cpp:[m[K In member function ‘[01m[Kvirtual void smallMap::wheelEvent(QWheelEvent*)[m[K’:
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/smallmap.cpp:157:32:[m[K [01;35m[Kwarning: [m[K‘[01m[KQPoint QWheelEvent::pos() const[m[K’ is deprecated: Use position() [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-declarations-Wdeprecated-declarations]8;;[m[K]
+  157 |     changeScaleValue([01;35m[Kevent->pos()[m[K,event->delta());
+      |                      [01;35m[K~~~~~~~~~~^~[m[K
+In file included from [01m[K/usr/include/x86_64-linux-gnu/qt5/QtGui/QMouseEvent:1[m[K,
+                 from [01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/smallmap.cpp:3[m[K:
+[01m[K/usr/include/x86_64-linux-gnu/qt5/QtGui/qevent.h:225:19:[m[K [01;36m[Knote: [m[Kdeclared here
+  225 |     inline QPoint [01;36m[Kpos[m[K() const { return p.toPoint(); }
+      |                   [01;36m[K^~~[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/smallmap.cpp:157:47:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint QWheelEvent::delta() const[m[K’ is deprecated: Use angleDelta() [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-declarations-Wdeprecated-declarations]8;;[m[K]
+  157 |     changeScaleValue(event->pos(),[01;35m[Kevent->delta()[m[K);
+      |                                   [01;35m[K~~~~~~~~~~~~^~[m[K
+In file included from [01m[K/usr/include/x86_64-linux-gnu/qt5/QtGui/QMouseEvent:1[m[K,
+                 from [01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/smallmap.cpp:3[m[K:
+[01m[K/usr/include/x86_64-linux-gnu/qt5/QtGui/qevent.h:219:16:[m[K [01;36m[Knote: [m[Kdeclared here
+  219 |     inline int [01;36m[Kdelta[m[K() const  { return qt4D; }
+      |                [01;36m[K^~~~~[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/pnpwidget.cpp:[m[K In constructor ‘[01m[KpnpWidget::pnpWidget()[m[K’:
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/pnpwidget.cpp:25:5:[m[K [01;31m[Kerror: [m[K‘[01m[KcloseImg[m[K’ was not declared in this scope; did you mean ‘[01m[Kcloseimage[m[K’?
+   25 |     [01;31m[KcloseImg[m[K.load(image_path);
+      |     [01;31m[K^~~~~~~~[m[K
+      |     [32m[Kcloseimage[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/pnpwidget.cpp:26:5:[m[K [01;31m[Kerror: [m[K‘[01m[KfarImg[m[K’ was not declared in this scope; did you mean ‘[01m[Kfarimage[m[K’?
+   26 |     [01;31m[KfarImg[m[K.load(image_path);
+      |     [01;31m[K^~~~~~[m[K
+      |     [32m[Kfarimage[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/pnpwidget.cpp:[m[K In member function ‘[01m[Kvirtual bool pnpWidget::eventFilter(QObject*, QEvent*)[m[K’:
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/pnpwidget.cpp:167:37:[m[K [01;31m[Kerror: [m[K‘[01m[Kcloseimg[m[K’ was not declared in this scope; did you mean ‘[01m[Kcloseimage[m[K’?
+  167 |             painter.drawPixmap(rect,[01;31m[Kcloseimg[m[K);
+      |                                     [01;31m[K^~~~~~~~[m[K
+      |                                     [32m[Kcloseimage[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/pnpwidget.cpp:180:17:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K.[m[K’ token
+  180 |             else[01;31m[K.[m[K
+      |                 [01;31m[K^[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/pnpwidget.cpp:181:13:[m[K [01;31m[Kerror: [m[Kexpected unqualified-id before ‘[01m[K{[m[K’ token
+  181 |             [01;31m[K{[m[K
+      |             [01;31m[K^[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/pnpwidget.cpp:269:37:[m[K [01;31m[Kerror: [m[K‘[01m[Kfarimg[m[K’ was not declared in this scope; did you mean ‘[01m[Kfarimage[m[K’?
+  269 |             painter.drawPixmap(rect,[01;31m[Kfarimg[m[K);
+      |                                     [01;31m[K^~~~~~[m[K
+      |                                     [32m[Kfarimage[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/pnpwidget.cpp:[m[K In member function ‘[01m[Kvoid pnpWidget::beginPnp()[m[K’:
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/pnpwidget.cpp:360:28:[m[K [01;35m[Kwarning: [m[Ksuggest parentheses around assignment used as truth value [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wparentheses-Wparentheses]8;;[m[K]
+  360 |         else if([01;35m[Kpnp_img_id = 2[m[K)
+      |                 [01;35m[K~~~~~~~~~~~^~~[m[K
+gmake[2]: *** [CMakeFiles/Qt5_displayer.dir/build.make:104：CMakeFiles/Qt5_displayer.dir/src/pnpwidget.cpp.o] 错误 1
+gmake[2]: *** 正在等待未完成的任务....
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/qtnode.cpp:[m[K In member function ‘[01m[Kvoid qtNode::farPointsCallback(my_msgss::msg::Points)[m[K’:
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/qtnode.cpp:114:12:[m[K [01;31m[Kerror: [m[K‘[01m[KupdateFarPoints[m[K’ was not declared in this scope; did you mean ‘[01m[KupdatePoints[m[K’?
+  114 |     Q_EMIT [01;31m[KupdateFarPoints[m[K();
+      |            [01;31m[K^~~~~~~~~~~~~~~[m[K
+      |            [32m[KupdatePoints[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/qtnode.cpp:[m[K In member function ‘[01m[Kvoid qtNode::closePointsCallback(my_msgss::msg::Points)[m[K’:
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/qtnode.cpp:120:12:[m[K [01;31m[Kerror: [m[K‘[01m[KupdateClosePoints[m[K’ was not declared in this scope; did you mean ‘[01m[KupdatePoints[m[K’?
+  120 |     Q_EMIT [01;31m[KupdateClosePoints[m[K();
+      |            [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+      |            [32m[KupdatePoints[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/qtnode.cpp:[m[K In member function ‘[01m[Kvirtual void qtNode::run()[m[K’:
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/qtnode.cpp:142:118:[m[K [01;31m[Kerror: [m[K‘[01m[KdepthImageCallback[m[K’ is not a member of ‘[01m[KqtNode[m[K’
+  142 |     fardepth_sub_ = qnode->create_subscription<sensor_msgs::msg::Image>("/qt/fardepth_qimage", 1, std::bind(&qtNode::[01;31m[KdepthImageCallback[m[K, this, std::placeholders::_1));
+      |                                                                                                                      [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/qtnode.cpp:143:5:[m[K [01;31m[Kerror: [m[K‘[01m[Kfarpoints_sub_[m[K’ was not declared in this scope; did you mean ‘[01m[Kpoints_sub_[m[K’?
+  143 |     [01;31m[Kfarpoints_sub_[m[K = qnode->create_subscription<my_msgss::msg::Points>("/qt/farpoints", 10, std::bind(&qtNode::pointsCallback, this, std::placeholders::_1));
+      |     [01;31m[K^~~~~~~~~~~~~~[m[K
+      |     [32m[Kpoints_sub_[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/qtnode.cpp:143:112:[m[K [01;31m[Kerror: [m[K‘[01m[KpointsCallback[m[K’ is not a member of ‘[01m[KqtNode[m[K’
+  143 |     farpoints_sub_ = qnode->create_subscription<my_msgss::msg::Points>("/qt/farpoints", 10, std::bind(&qtNode::[01;31m[KpointsCallback[m[K, this, std::placeholders::_1));
+      |                                                                                                                [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/qtnode.cpp:146:122:[m[K [01;31m[Kerror: [m[K‘[01m[KdepthImageCallback[m[K’ is not a member of ‘[01m[KqtNode[m[K’
+  146 |     closedepth_sub_ = qnode->create_subscription<sensor_msgs::msg::Image>("/qt/closedepth_qimage", 1, std::bind(&qtNode::[01;31m[KdepthImageCallback[m[K, this, std::placeholders::_1));
+      |                                                                                                                          [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/qtnode.cpp:147:5:[m[K [01;31m[Kerror: [m[K‘[01m[Kclosepoints_sub_[m[K’ was not declared in this scope; did you mean ‘[01m[Kclosedepth_sub_[m[K’?
+  147 |     [01;31m[Kclosepoints_sub_[m[K = qnode->create_subscription<my_msgss::msg::Points>("/qt/closepoints", 10, std::bind(&qtNode::pointsCallback, this, std::placeholders::_1));
+      |     [01;31m[K^~~~~~~~~~~~~~~~[m[K
+      |     [32m[Kclosedepth_sub_[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/qtnode.cpp:147:116:[m[K [01;31m[Kerror: [m[K‘[01m[KpointsCallback[m[K’ is not a member of ‘[01m[KqtNode[m[K’
+  147 |     closepoints_sub_ = qnode->create_subscription<my_msgss::msg::Points>("/qt/closepoints", 10, std::bind(&qtNode::[01;31m[KpointsCallback[m[K, this, std::placeholders::_1));
+      |                                                                                                                    [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/radarstation.cpp:[m[K In member function ‘[01m[Kvoid radarStation::farPointsUpdate()[m[K’:
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/radarstation.cpp:209:20:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<my_msgss::msg::Point_<std::allocator<void> >, std::allocator<my_msgss::msg::Point_<std::allocator<void> > > >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  209 |     for(int i = 0;[01;35m[Ki<far_qpoints.data.size()[m[K;i++)
+      |                   [01;35m[K~^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/radarstation.cpp:[m[K In member function ‘[01m[Kvoid radarStation::closePointsUpdate()[m[K’:
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/radarstation.cpp:233:20:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<my_msgss::msg::Point_<std::allocator<void> >, std::allocator<my_msgss::msg::Point_<std::allocator<void> > > >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  233 |     for(int i = 0;[01;35m[Ki<close_qpoints.data.size()[m[K;i++)
+      |                   [01;35m[K~^~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/qianli/zyb/radar_station/src/Qt5_displayer/src/radarstation.cpp:239:23:[m[K [01;31m[Kerror: [m[K‘[01m[Kcloseqpoints[m[K’ was not declared in this scope; did you mean ‘[01m[Kclose_qpoints[m[K’?
+  239 |         closepos.id = [01;31m[Kcloseqpoints[m[K.data[i].id;
+      |                       [01;31m[K^~~~~~~~~~~~[m[K
+      |                       [32m[Kclose_qpoints[m[K
+gmake[2]: *** [CMakeFiles/Qt5_displayer.dir/build.make:132：CMakeFiles/Qt5_displayer.dir/src/radarstation.cpp.o] 错误 1
+gmake[2]: *** [CMakeFiles/Qt5_displayer.dir/build.make:118：CMakeFiles/Qt5_displayer.dir/src/qtnode.cpp.o] 错误 1
+gmake[1]: *** [CMakeFiles/Makefile2:138：CMakeFiles/Qt5_displayer.dir/all] 错误 2
+gmake: *** [Makefile:146：all] 错误 2

@@ -34,11 +34,13 @@ public:
 
     void far_callback(const my_msgss::msg::Distpoints msg);
 
+    void close_callback(const my_msgss::msg::Distpoints msg);
+
     void pnp_callback(const std_msgs::msg::Float32MultiArray msg);
 
     void far_calibration();
 
-    void draw_point_on_map();
+    void draw_point_on_map(Mat &map,vector<map_point> &map_points);
 
     Point2f calculate_pixel_codi(const map_point &point);
 private:
@@ -47,9 +49,6 @@ private:
     float image_width;
     float image_height;
 
-
-    vector<cv::Point3d> far_objectPoints;
-    vector<cv::Point2d> far_imagePoints;
     cv::Mat far_CamMatrix_ =Mat::zeros(3, 3, CV_64FC1);
     cv::Mat far_distCoeffs_ =Mat::zeros(5, 1, CV_64FC1);
     Mat far_Rjacob = Mat::zeros(3, 1, CV_64FC1);
@@ -57,13 +56,23 @@ private:
     Mat far_T = Mat::zeros(3, 1, CV_64FC1);
     my_msgss::msg::Points far_points;
 
+    cv::Mat close_CamMatrix_ =Mat::zeros(3, 3, CV_64FC1);
+    cv::Mat close_distCoeffs_ =Mat::zeros(5, 1, CV_64FC1);
+    Mat close_Rjacob = Mat::zeros(3, 1, CV_64FC1);
+    Mat close_R = Mat::zeros(3, 3, CV_64FC1);
+    Mat close_T = Mat::zeros(3, 1, CV_64FC1);
+    my_msgss::msg::Points close_points;
+
     Mat test_map;
     Mat map;
 
-    vector<map_point> map_points;
+    vector<map_point> far_map_points;
+    vector<map_point> close_map_points;
     
-    rclcpp::Publisher<my_msgss::msg::Points>::SharedPtr points_pub_;
+    rclcpp::Publisher<my_msgss::msg::Points>::SharedPtr far_points_pub_;
+    rclcpp::Publisher<my_msgss::msg::Points>::SharedPtr close_points_pub_;
 
     rclcpp::Subscription<my_msgss::msg::Distpoints>::SharedPtr far_distpoints_sub_;
+    rclcpp::Subscription<my_msgss::msg::Distpoints>::SharedPtr close_distpoints_sub_;
     rclcpp::Subscription<std_msgs::msg::Float32MultiArray>::SharedPtr pnp_sub_;
 };

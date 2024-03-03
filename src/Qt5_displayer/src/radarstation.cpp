@@ -40,9 +40,15 @@ void radarStation::init()
 {
     connect(ui->pnpMode,SIGNAL(clicked()),this,SLOT(changeToPnpWidget()));
     connect(ui->mapMode,SIGNAL(clicked()),this,SLOT(changeToMapWidget()));
+
     connect(&this->qtnode,SIGNAL(updateFarImage()),this,SLOT(farImageUpdate()));
-    connect(&this->qtnode,SIGNAL(updateDepthImage()),this,SLOT(depthImageUpdate()));
-    connect(&this->qtnode,SIGNAL(updatePoints()),this,SLOT(pointsUpdate()));
+    connect(&this->qtnode,SIGNAL(updateDepthImage()),this,SLOT(farDepthImageUpdate()));
+    connect(&this->qtnode,SIGNAL(updateFarPoints()),this,SLOT(farPointsUpdate()));
+
+    connect(&this->qtnode,SIGNAL(updateCloseImage()),this,SLOT(closeImageUpdate()));
+    connect(&this->qtnode,SIGNAL(updateCloseDepthImage()),this,SLOT(closeDepthImageUpdate()));
+    connect(&this->qtnode,SIGNAL(updateClosePoints()),this,SLOT(closePointsUpdate()));
+
     connect(ui->solvePnpWidget,SIGNAL(pnpFinished()),this,SLOT(publishPnpResult()));
 }
 
@@ -110,34 +116,66 @@ void radarStation::changeToPnpWidget()
 
 void radarStation::farImageUpdate()
 {
-    qimage_mutex.lock();
+    far_qimage_mutex.lock();
     //mapMessageDisplay("farImageUpdate");
     if(ui->pnpMode->isChecked())
     {
         //cout << "pnpMode" << endl;
-        ui->solvePnpWidget->cameraimage = QPixmap::fromImage(qtnode.far_qimage);
-        ui->solvePnpWidget->ui->cameraImage->update();
+        ui->solvePnpWidget->farimage = QPixmap::fromImage(qtnode.far_qimage);
+        ui->solvePnpWidget->ui->farImg->update();
     }
     else if(ui->mapMode->isChecked())
     {
         //cout << "mapMode" << endl;
-        ui->imgHandle->setPixmap(QPixmap::fromImage(qtnode.far_qimage));
-        ui->imgHandle->update();
+        ui->farImg->setPixmap(QPixmap::fromImage(qtnode.far_qimage));
+        ui->farImg->update();
     }
-    qimage_mutex.unlock();
+    far_qimage_mutex.unlock();
 }
 
-void radarStation::depthImageUpdate()
+void radarStation::closeImageUpdate()
 {
-    qimage_mutex.lock();
+    close_qimage_mutex.lock();
+    //mapMessageDisplay("farImageUpdate");
+    if(ui->pnpMode->isChecked())
+    {
+        //cout << "pnpMode" << endl;
+        ui->solvePnpWidget->closeimage = QPixmap::fromImage(qtnode.close_qimage);
+        ui->solvePnpWidget->ui->closeImg->update();
+    }
+    else if(ui->mapMode->isChecked())
+    {
+        //cout << "mapMode" << endl;
+        ui->closeImg->setPixmap(QPixmap::fromImage(qtnode.close_qimage));
+        ui->closeImg->update();
+    }
+    close_qimage_mutex.unlock();
+}
+
+void radarStation::farDepthImageUpdate()
+{
+    far_qimage_mutex.lock();
     //mapMessageDisplay("depthImageUpdate");
     if(ui->mapMode->isChecked())
     {
         //cout << "绘画深度图" << endl;
-        ui->radarDepth->setPixmap(QPixmap::fromImage(qtnode.depth_qimage));
-        ui->radarDepth->update();
+        ui->farDepth->setPixmap(QPixmap::fromImage(qtnode.fardepth_qimage));
+        ui->farDepth->update();
     }
-    qimage_mutex.unlock();
+    far_qimage_mutex.unlock();
+}
+
+void radarStation::closeDepthImageUpdate()
+{
+    close_qimage_mutex.lock();
+    //mapMessageDisplay("depthImageUpdate");
+    if(ui->mapMode->isChecked())
+    {
+        //cout << "绘画深度图" << endl;
+        ui->closeDepth->setPixmap(QPixmap::fromImage(qtnode.closedepth_qimage));
+        ui->closeDepth->update();
+    }
+    close_qimage_mutex.unlock();
 }
 
 void radarStation::publishPnpResult()
@@ -155,30 +193,55 @@ void radarStation::publishPnpResult()
     pnp_result.data.push_back(ui->solvePnpWidget->far_T.at<double>(0,0));
     pnp_result.data.push_back(ui->solvePnpWidget->far_T.at<double>(1,0));
     pnp_result.data.push_back(ui->solvePnpWidget->far_T.at<double>(2,0));
+    pnp_result.data.push_back(ui->solvePnpWidget->pnp_img_id);
     qtnode.pnp_pub_->publish(pnp_result);
     cout << "发送pnp结果" << endl;
 }
 
-void radarStation::pointsUpdate()
+void radarStation::farPointsUpdate()
 {
     float object_width = 11.5;
     float object_height = 8;
-    my_msgss::msg::Points qpoints = qtnode.world_qpoints;
+    my_msgss::msg::Points far_qpoints = qtnode.far_world_qpoints;
     float width = ui->map->width() * ui->map->scaleValue;
     float height = ui->map->height() * ui->map->scaleValue;
-    mapPos pos;
-    for(int i = 0;i<qpoints.data.size();i++)
+    mapPos farpos;
+    for(int i = 0;i<far_qpoints.data.size();i++)
     {
-        pos.x = qpoints.data[i].x / object_width * width;
-        pos.y = height - (qpoints.data[i].y / object_height * height);
-        pos.x = pos.x + ui->map->drawPos.x();
-        pos.y = pos.y + ui->map->drawPos.y();
-        pos.id = qpoints.data[i].id;
-        ui->map->mapPoints.push_back(pos);
-        QString pointText = QString::number(pos.id) + "号机器人相对于初始小地图的坐标为 x:" 
-                            + QString::number((pos.x - ui->map->drawPos.x()) / ui->map->scaleValue) +" y:"
-                            + QString::number((pos.y - ui->map->drawPos.y()) / ui->map->scaleValue);
-        mapMessageDisplay(pointText);
+        farpos.x = far_qpoints.data[i].x / object_width * width;
+        farpos.y = height - (far_qpoints.data[i].y / object_height * height);
+        farpos.x = farpos.x + ui->map->drawPos.x();
+        farpos.y = farpos.y + ui->map->drawPos.y();
+        farpos.id = far_qpoints.data[i].id;
+        ui->map->farmapPoints.push_back(farpos);
+        QString far_pointText = QString::number(farpos.id) + "号机器人相对于初始小地图的坐标为 x:" 
+                            + QString::number((farpos.x - ui->map->drawPos.x()) / ui->map->scaleValue) +" y:"
+                            + QString::number((farpos.y - ui->map->drawPos.y()) / ui->map->scaleValue);
+        mapMessageDisplay(far_pointText);
+    }
+    ui->map->update();
+}
+
+void radarStation::closePointsUpdate()
+{
+    float object_width = 11.5;
+    float object_height = 8;
+    my_msgss::msg::Points close_qpoints = qtnode.close_world_qpoints;
+    float width = ui->map->width() * ui->map->scaleValue;
+    float height = ui->map->height() * ui->map->scaleValue;
+    mapPos closepos;
+    for(int i = 0;i<close_qpoints.data.size();i++)
+    {
+        closepos.x = close_qpoints.data[i].x / object_width * width;
+        closepos.y = height - (close_qpoints.data[i].y / object_height * height);
+        closepos.x = closepos.x + ui->map->drawPos.x();
+        closepos.y = closepos.y + ui->map->drawPos.y();
+        closepos.id = closeqpoints.data[i].id;
+        ui->map->closemapPoints.push_back(closepos);
+        QString close_pointText = QString::number(closepos.id) + "号机器人相对于初始小地图的坐标为 x:" 
+                            + QString::number((closepos.x - ui->map->drawPos.x()) / ui->map->scaleValue) +" y:"
+                            + QString::number((closepos.y - ui->map->drawPos.y()) / ui->map->scaleValue);
+        mapMessageDisplay(close_pointText);
     }
     ui->map->update();
 }

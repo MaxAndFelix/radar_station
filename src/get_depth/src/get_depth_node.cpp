@@ -79,11 +79,11 @@ GetDepth::GetDepth() : Node("GetDepth_node")
 
     far_yolo_sub = this->create_subscription<my_msgss::msg::Yolopoints>("/far_rectangles", 1, std::bind(&GetDepth::far_yoloCallback, this, std::placeholders::_1));
     far_distancePointPub = this->create_publisher<my_msgss::msg::Distpoints>("/sensor_far/distance_point", 10);
-    far_depth_qimage_pub = this->create_publisher<sensor_msgs::msg::Image>("/qt/far/depth_qimage", 1);
+    far_depth_qimage_pub = this->create_publisher<sensor_msgs::msg::Image>("/qt/fardepth_qimage", 1);
     
     close_yolo_sub = this->create_subscription<my_msgss::msg::Yolopoints>("/close_rectangles", 1, std::bind(&GetDepth::close_yoloCallback, this, std::placeholders::_1));
     close_distancePointPub = this->create_publisher<my_msgss::msg::Distpoints>("/sensor_close/distance_point", 10);
-    close_depth_qimage_pub = this->create_publisher<sensor_msgs::msg::Image>("/qt/close/depth_qimage", 1);
+    close_depth_qimage_pub = this->create_publisher<sensor_msgs::msg::Image>("/qt/closedepth_qimage", 1);
 
     outpost_distancePointPub = this->create_publisher<my_msgss::msg::Distpoint>("sensor_far/outpost", 10);
     outpost_Sub = this->create_subscription<my_msgss::msg::Points>("/sensor_far/calibration", 1, std::bind(&GetDepth::outpost_Callback, this, std::placeholders::_1));

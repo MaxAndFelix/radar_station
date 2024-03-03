@@ -35,16 +35,25 @@ public Q_SLOTS:
 
     void farImageUpdate();
 
-    void depthImageUpdate();
+    void closeImageUpdate();
+
+    void farDepthImageUpdate();
+
+    void closeDepthImageUpdate();
 
     void publishPnpResult();
 
-    void pointsUpdate();
+    void farPointsUpdate();
+
+    void closePointsUpdate();
 private:
     Ui::radarStation *ui;
     qtNode qtnode;
-    mutable QMutex qimage_mutex;
+    mutable QMutex far_qimage_mutex;
+    mutable QMutex close_qimage_mutex;
+
 
     QPoint pos;
+
 };
 #endif // RADARSTATION_H
